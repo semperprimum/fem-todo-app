@@ -1,6 +1,5 @@
 import type { DropResult } from "@hello-pangea/dnd";
-import { PayloadAction } from "./../../../node_modules/@reduxjs/toolkit/dist/createAction.d";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
 interface Todo {
@@ -50,6 +49,15 @@ const initialState: TodoState = {
   filter: "all",
 };
 
+// Load todos from localStorage or use initialState if not found
+const storedTodos = localStorage.getItem("todos");
+if (storedTodos) {
+  initialState.todos = JSON.parse(storedTodos);
+} else {
+  // Set initial todos if not found in localStorage
+  localStorage.setItem("todos", JSON.stringify(initialState.todos));
+}
+
 const todoSlice = createSlice({
   name: "todo",
   initialState,
@@ -60,10 +68,12 @@ const todoSlice = createSlice({
         title: action.payload,
         isCompleted: false,
       };
-      state.todos.push(newTodo);
+      state.todos = [...state.todos, newTodo];
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     deleteTodo: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     toggleCompleted: (state, action: PayloadAction<string>) => {
       state.todos.forEach((todo) => {
@@ -71,6 +81,7 @@ const todoSlice = createSlice({
           todo.isCompleted = !todo.isCompleted;
         }
       });
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     handleDragEnd: (state, action: PayloadAction<DropResult>) => {
       if (!action.payload.destination) return;
@@ -80,9 +91,11 @@ const todoSlice = createSlice({
       todos.splice(action.payload.destination.index, 0, reorderedItem);
 
       state.todos = todos;
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     clearCompleted: (state) => {
       state.todos = state.todos.filter((todo) => !todo.isCompleted);
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     setFilter: (
       state,

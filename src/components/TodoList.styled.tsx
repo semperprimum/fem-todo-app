@@ -14,6 +14,7 @@ import {
 export const TodoList: React.FC = () => {
   const todos = useSelector((state: RootState) => state.todo.todos);
   const dispatch = useDispatch<AppDispatch>();
+  const filter = useSelector((state: RootState) => state.todo.filter);
 
   const getIncompleteTodoCount = (): number => {
     return todos.filter((todo) => !todo.isCompleted).length;
@@ -24,7 +25,7 @@ export const TodoList: React.FC = () => {
   };
 
   const filteredTodos = todos.filter((todo) => {
-    switch (useSelector((state: RootState) => state.todo.filter)) {
+    switch (filter) {
       case "all":
         return true;
       case "active":

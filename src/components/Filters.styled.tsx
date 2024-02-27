@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import { AppDispatch, RootState } from "../store/state";
 import { setFilter } from "../store/todo/todoSlice";
 
-// TODO: make filters work
 export const Filters: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const filter = useSelector((state: RootState) => state.todo.filter);

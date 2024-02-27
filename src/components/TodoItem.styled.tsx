@@ -22,7 +22,6 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
 
   const toggleChecked = () => {
     dispatch(toggleCompleted(props.todo.id));
-    props.provided.draggableProps.style;
   };
 
   return (
