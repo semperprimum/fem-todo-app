@@ -23,19 +23,27 @@ export const TodoList: React.FC = () => {
     dispatch(handleDragEnd(result));
   };
 
+  const filteredTodos = todos.filter((todo) => {
+    switch (useSelector((state: RootState) => state.todo.filter)) {
+      case "all":
+        return true;
+      case "active":
+        return !todo.isCompleted;
+      case "completed":
+        return todo.isCompleted;
+    }
+  });
+
   return (
     <Container>
-      <DragDropContext
-        onDragEnd={handleOnDragEnd}
-        onDragStart={() => console.log("drag start")}
-      >
+      <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="todos">
           {(provided) => (
             <List
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {todos.map((todo, index) => (
+              {filteredTodos.map((todo, index) => (
                 <Draggable
                   key={todo.id}
                   draggableId={todo.id}

@@ -11,6 +11,7 @@ interface Todo {
 
 interface TodoState {
   todos: Todo[];
+  filter: "all" | "active" | "completed";
 }
 
 const initialState: TodoState = {
@@ -46,6 +47,7 @@ const initialState: TodoState = {
       isCompleted: false,
     },
   ],
+  filter: "all",
 };
 
 const todoSlice = createSlice({
@@ -82,6 +84,12 @@ const todoSlice = createSlice({
     clearCompleted: (state) => {
       state.todos = state.todos.filter((todo) => !todo.isCompleted);
     },
+    setFilter: (
+      state,
+      action: PayloadAction<"all" | "active" | "completed">
+    ) => {
+      state.filter = action.payload;
+    },
   },
 });
 
@@ -91,6 +99,7 @@ export const {
   toggleCompleted,
   clearCompleted,
   handleDragEnd,
+  setFilter,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
