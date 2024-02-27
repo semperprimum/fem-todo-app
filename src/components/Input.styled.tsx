@@ -17,6 +17,7 @@ export const Input: React.FC = () => {
     if (title === "") return;
 
     dispatch(add(title));
+    setTitle("");
   };
 
   return (

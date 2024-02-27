@@ -1,29 +1,37 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { CheckboxWithLabel } from "./CheckboxWithLabel.styled";
 // @ts-ignore
 import IconCross from "../assets/images/icon-cross.svg?react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/state";
 import { deleteTodo, toggleCompleted } from "../store/todo/todoSlice";
+import { DraggableProvided } from "@hello-pangea/dnd";
 
 interface TodoItemProps {
-  todo: { title: string; isCompleted: boolean };
-  index: number;
+  todo: { id: string; title: string; isCompleted: boolean };
+  provided: DraggableProvided;
+  dragging: boolean;
 }
 
 export const TodoItem: React.FC<TodoItemProps> = (props) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const onDelete = () => {
-    dispatch(deleteTodo(props.index));
+    dispatch(deleteTodo(props.todo.id));
   };
 
   const toggleChecked = () => {
-    dispatch(toggleCompleted(props.index));
+    dispatch(toggleCompleted(props.todo.id));
+    props.provided.draggableProps.style;
   };
 
   return (
-    <TodoItemContainer>
+    <TodoItemContainer
+      {...props.provided.draggableProps}
+      {...props.provided.dragHandleProps}
+      ref={props.provided.innerRef}
+      $dragging={props.dragging}
+    >
       <ItemInfo>
         <CheckboxWithLabel
           title={props.todo.title}
@@ -41,16 +49,15 @@ export const TodoItem: React.FC<TodoItemProps> = (props) => {
   );
 };
 
-const TodoItemContainer = styled.li`
+interface TodoItemContainerProps {
+  $dragging: boolean;
+}
+
+const TodoItemContainer = styled.li<TodoItemContainerProps>`
   padding-block: 1rem;
   position: relative;
   display: flex;
   justify-content: space-between;
-
-  &:first-child {
-    padding-top: 0;
-    padding-bottom: 1rem;
-  }
 
   &::before {
     content: "";
@@ -61,6 +68,14 @@ const TodoItemContainer = styled.li`
     bottom: 0;
     background-color: ${(props) => props.theme.divider};
   }
+
+  ${(props) =>
+    props.$dragging &&
+    css`
+      &::before {
+        background-color: transparent;
+      }
+    `}
 `;
 
 const ItemInfo = styled.div`

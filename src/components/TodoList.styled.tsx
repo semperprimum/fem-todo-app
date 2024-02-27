@@ -3,7 +3,13 @@ import { Container } from "./Container.styled";
 import { TodoItem } from "./TodoItem.styled";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/state";
-import { clearCompleted } from "../store/todo/todoSlice";
+import { clearCompleted, handleDragEnd } from "../store/todo/todoSlice";
+import {
+  DragDropContext,
+  Draggable,
+  DropResult,
+  Droppable,
+} from "@hello-pangea/dnd";
 
 export const TodoList: React.FC = () => {
   const todos = useSelector((state: RootState) => state.todo.todos);
@@ -13,19 +19,43 @@ export const TodoList: React.FC = () => {
     return todos.filter((todo) => !todo.isCompleted).length;
   };
 
-  // TODO: implement drag&drop
+  const handleOnDragEnd = (result: DropResult) => {
+    dispatch(handleDragEnd(result));
+  };
 
   return (
     <Container>
-      <List>
-        {todos.map((todo, index) => (
-          <TodoItem
-            key={index}
-            todo={todo}
-            index={index}
-          />
-        ))}
-      </List>
+      <DragDropContext
+        onDragEnd={handleOnDragEnd}
+        onDragStart={() => console.log("drag start")}
+      >
+        <Droppable droppableId="todos">
+          {(provided) => (
+            <List
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {todos.map((todo, index) => (
+                <Draggable
+                  key={todo.id}
+                  draggableId={todo.id}
+                  index={index}
+                >
+                  {(provided, snapshot) => (
+                    <TodoItem
+                      provided={provided}
+                      key={todo.id}
+                      todo={todo}
+                      dragging={snapshot.isDragging}
+                    />
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </List>
+          )}
+        </Droppable>
+      </DragDropContext>
 
       <BottomBar>
         <ItemCount>{getIncompleteTodoCount()} Items left</ItemCount>
@@ -40,6 +70,7 @@ export const TodoList: React.FC = () => {
 const List = styled.ul`
   padding: 0;
   margin: 0;
+  margin-top: -1rem;
 `;
 
 const BottomBar = styled.div`

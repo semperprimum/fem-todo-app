@@ -10,11 +10,6 @@ import {
 import { Container } from "./components/Container.styled";
 import { Footer } from "./components/Footer.styled";
 
-export interface Todo {
-  title: string;
-  isCompleted: boolean;
-}
-
 const App = () => {
   return (
     <>
