@@ -10,11 +10,16 @@ import {
   DropResult,
   Droppable,
 } from "@hello-pangea/dnd";
+import { useMedia } from "../hooks/useMedia";
+import { Filters } from ".";
+import { useMemo } from "react";
 
 export const TodoList: React.FC = () => {
   const todos = useSelector((state: RootState) => state.todo.todos);
   const dispatch = useDispatch<AppDispatch>();
   const filter = useSelector((state: RootState) => state.todo.filter);
+
+  const isMatching = useMedia("(min-width: 37.5em)");
 
   const getIncompleteTodoCount = (): number => {
     return todos.filter((todo) => !todo.isCompleted).length;
@@ -24,16 +29,20 @@ export const TodoList: React.FC = () => {
     dispatch(handleDragEnd(result));
   };
 
-  const filteredTodos = todos.filter((todo) => {
-    switch (filter) {
-      case "all":
-        return true;
-      case "active":
-        return !todo.isCompleted;
-      case "completed":
-        return todo.isCompleted;
-    }
-  });
+  const filteredTodos = useMemo(() => {
+    return todos.filter((todo) => {
+      switch (filter) {
+        case "all":
+          return true;
+        case "active":
+          return !todo.isCompleted;
+        case "completed":
+          return todo.isCompleted;
+        default:
+          return true;
+      }
+    });
+  }, [todos, filter]);
 
   return (
     <Container>
@@ -68,6 +77,7 @@ export const TodoList: React.FC = () => {
 
       <BottomBar>
         <ItemCount>{getIncompleteTodoCount()} Items left</ItemCount>
+        {isMatching && <Filters />}
         <ClearButton onClick={() => dispatch(clearCompleted())}>
           Clear Completed
         </ClearButton>
@@ -83,20 +93,26 @@ const List = styled.ul`
 `;
 
 const BottomBar = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 1rem;
   align-items: center;
 
-  margin-top: 1rem;
+  @media only screen and (min-width: 37.5em) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
 const ItemCount = styled.span`
   color: ${(props) => props.theme.textSecondary};
+  font-size: var(--fs-md);
 `;
 
 const ClearButton = styled.button`
   border: none;
   background: none;
+  text-align: end;
+  font-size: var(--fs-md);
 
   color: ${(props) => props.theme.textSecondary};
 `;

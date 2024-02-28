@@ -5,7 +5,7 @@ import { AppDispatch } from "../store/state";
 import { add } from "../store/todo/todoSlice";
 
 export const Input: React.FC = () => {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
 
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +22,7 @@ export const Input: React.FC = () => {
 
   return (
     <InputContainer>
-      <Circle />
+      <Circle aria-hidden="true" />
       <form onSubmit={onSubmit}>
         <InputField
           onChange={onChangeInput}

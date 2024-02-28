@@ -8,6 +8,12 @@ export const GlobalStyles = createGlobalStyle`
 
         --fw-regular: 400;
         --fw-bold: 700;
+
+        @media only screen and (min-width: 37.5em) {
+            --fs-sm: 1.125rem;
+            --fs-md: 0.875rem;
+            --fs-lg: 2.5rem;
+        }
     }
 
     body {

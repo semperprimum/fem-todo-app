@@ -48,11 +48,7 @@ const FilterOptionList = styled.ul`
 
 const FilterOptionItem = styled.li``;
 
-interface FilterOptionButtonProps {
-  $active?: boolean;
-}
-
-const FilterOptionButton = styled.button<FilterOptionButtonProps>`
+const FilterOptionButton = styled.button<{ $active: boolean }>`
   background: none;
   border: none;
   font-weight: var(--fw-bold);

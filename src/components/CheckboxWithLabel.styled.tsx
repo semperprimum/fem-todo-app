@@ -35,25 +35,36 @@ const Checkbox = styled.input`
   outline: 1px solid ${(props) => props.theme.divider};
   outline-offset: -1px;
   border-radius: 50%;
+  overflow: hidden;
+  transition: outline-color 150ms ease;
 
   display: grid;
   place-items: center;
 
-  &:checked {
+  &::before {
+    content: url("/images/icon-check.svg");
+    position: relative;
+    z-index: 999;
+    display: grid;
+    place-content: center;
+    border-radius: 100vmax;
     background-image: linear-gradient(
       135deg,
       rgba(84, 220, 255, 1) 0%,
       rgba(191, 87, 243, 1) 100%
     );
     background-position: center center;
-    outline: none;
+    height: 100%;
+    width: 100%;
+    transform: scale(0);
+    transition: transform 150ms ease;
+  }
+
+  &:checked {
+    outline-color: transparent;
 
     &::before {
-      content: url("/images/icon-check.svg");
-      position: relative;
-      z-index: 999;
-      display: grid;
-      place-content: center;
+      transform: scale(1);
     }
   }
 `;

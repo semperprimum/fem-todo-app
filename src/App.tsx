@@ -9,8 +9,11 @@ import {
 } from "./components";
 import { Container } from "./components/Container.styled";
 import { Footer } from "./components/Footer.styled";
+import { useMedia } from "./hooks/useMedia";
 
 const App = () => {
+  const isMatching = useMedia("(max-width: 37.5em)");
+
   return (
     <>
       <Reset />
@@ -23,9 +26,11 @@ const App = () => {
 
         <TodoList />
 
-        <Container>
-          <Filters />
-        </Container>
+        {isMatching && (
+          <Container>
+            <Filters />
+          </Container>
+        )}
 
         <Footer />
       </AppWrapper>
