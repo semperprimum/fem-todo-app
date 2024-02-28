@@ -26,6 +26,7 @@ export const Input: React.FC = () => {
       <form onSubmit={onSubmit}>
         <InputField
           onChange={onChangeInput}
+          value={title}
           placeholder="Create a new todo..."
         />
       </form>
