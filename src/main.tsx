@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "@fontsource-variable/josefin-sans";
-import ThemeContextProvider from "./components/ThemeContext.tsx";
+import ThemeContextProvider from "./context/ThemeContext.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/state.ts";
 

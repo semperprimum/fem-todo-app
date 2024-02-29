@@ -3,7 +3,7 @@ import IconMoon from "../assets/images/icon-moon.svg?react";
 // @ts-ignore
 import IconSun from "../assets/images/icon-sun.svg?react";
 import { useContext } from "react";
-import { ThemeContext } from "./ThemeContext";
+import { ThemeContext } from "../context/ThemeContext";
 import styled from "styled-components";
 
 export const Header = () => {

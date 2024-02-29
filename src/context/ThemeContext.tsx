@@ -14,10 +14,31 @@ interface ThemeContextType {
 export const ThemeContext = createContext<ThemeContextType | null>(null);
 
 const ThemeContextProvider: React.FC<ThemeContextProps> = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("dark");
+  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">(() => {
+    // Try to get theme from localStorage
+    const savedTheme = window.localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme === "light" ? "light" : "dark";
+    }
+
+    // If no theme in localStorage, try to get system preference
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return "dark";
+    }
+
+    // Default to 'dark'
+    return "dark";
+  });
 
   const toggleTheme = () => {
-    setCurrentTheme(currentTheme === "light" ? "dark" : "light");
+    setCurrentTheme((prevTheme) => {
+      const newTheme = prevTheme === "light" ? "dark" : "light";
+      window.localStorage.setItem("theme", newTheme);
+      return newTheme;
+    });
   };
 
   return (
