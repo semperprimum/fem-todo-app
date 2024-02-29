@@ -6,6 +6,7 @@ import {
   Input,
   TodoList,
   Filters,
+  Attribution,
 } from "./components";
 import { Container } from "./components/Container.styled";
 import { Footer } from "./components/Footer.styled";
@@ -19,21 +20,27 @@ const App = () => {
       <Reset />
       <GlobalStyles />
 
-      <AppWrapper>
-        <Header />
+      <main>
+        <AppWrapper>
+          <Header />
 
-        <Input />
+          <Input />
 
-        <TodoList />
+          <TodoList />
 
-        {isMatching && (
-          <Container>
-            <Filters />
-          </Container>
-        )}
+          {isMatching && (
+            <Container>
+              <Filters />
+            </Container>
+          )}
 
-        <Footer />
-      </AppWrapper>
+          <Footer />
+        </AppWrapper>
+      </main>
+
+      <footer>
+        <Attribution />
+      </footer>
     </>
   );
 };

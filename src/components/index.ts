@@ -5,3 +5,4 @@ export { AppWrapper } from "./AppWrapper.styled";
 export { Input } from "./Input.styled";
 export { TodoList } from "./TodoList.styled";
 export { Filters } from "./Filters.styled";
+export { Attribution } from "./Attribution.styled";
