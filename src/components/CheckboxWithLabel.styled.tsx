@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 interface CheckboxWithLabelProps {
   title: string;
@@ -14,7 +14,7 @@ export const CheckboxWithLabel: React.FC<CheckboxWithLabelProps> = (props) => {
         checked={props.isChecked}
         type="checkbox"
       />
-      <Text>{props.title}</Text>
+      <Text $completed={props.isChecked}>{props.title}</Text>
     </CheckboxContainer>
   );
 };
@@ -104,8 +104,15 @@ const Checkbox = styled.input`
   }
 `;
 
-const Text = styled.p`
+const Text = styled.p<{ $completed: boolean }>`
   font-size: var(--fs-sm);
+
+  ${(props) =>
+    props.$completed &&
+    css`
+      color: ${(props) => props.theme.textMuted};
+      text-decoration: line-through;
+    `}
 
   @media only screen and (min-width: 37.5em) {
     letter-spacing: -0.25px;
