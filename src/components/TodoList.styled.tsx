@@ -90,6 +90,10 @@ const List = styled.ul`
   padding: 0;
   margin: 0;
   margin-top: -1rem;
+
+  @media only screen and (min-width: 37.5em) {
+    margin-top: -1.25rem;
+  }
 `;
 
 const BottomBar = styled.div`
@@ -100,6 +104,7 @@ const BottomBar = styled.div`
 
   @media only screen and (min-width: 37.5em) {
     grid-template-columns: repeat(3, 1fr);
+    margin-top: 0.7rem;
   }
 `;
 
@@ -115,4 +120,13 @@ const ClearButton = styled.button`
   font-size: var(--fs-md);
 
   color: ${(props) => props.theme.textSecondary};
+
+  @media only screen and (min-width: 37.5em) {
+    cursor: pointer;
+    transition: color 150ms ease;
+
+    &:hover {
+      color: ${(props) => props.theme.hover};
+    }
+  }
 `;

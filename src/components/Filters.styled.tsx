@@ -63,4 +63,17 @@ const FilterOptionButton = styled.button<{ $active: boolean }>`
       : css`
           color: ${(props) => props.theme.textSecondary};
         `}
+
+  @media only screen and (min-width: 37.5em) {
+    cursor: pointer;
+    transition: color 150ms ease;
+
+    &:hover {
+      ${(props) =>
+        !props.$active &&
+        css`
+          color: ${(props) => props.theme.hover};
+        `}
+    }
+  }
 `;

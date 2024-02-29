@@ -30,5 +30,12 @@ export const GlobalStyles = createGlobalStyle`
             : "url('/images/bg-mobile-dark.jpg')"};
         background-repeat: no-repeat;
         background-size: contain;
+
+        @media only screen and (min-width: 37.5em) {
+        background-image: ${(props) =>
+          props.theme.name === "light"
+            ? "url('/images/bg-desktop-light.jpg')"
+            : "url('/images/bg-desktop-dark.jpg')"};
+        }
     }
 `;

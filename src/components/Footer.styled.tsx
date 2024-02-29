@@ -11,6 +11,10 @@ export const Footer = () => {
 const FooterContainer = styled.div`
   text-align: center;
   margin-top: 2.5rem;
+
+  @media only screen and (min-width: 37.5em) {
+    margin-top: 1.6rem;
+  }
 `;
 
 const Text = styled.p`

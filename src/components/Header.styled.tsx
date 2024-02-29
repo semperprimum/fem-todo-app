@@ -43,6 +43,10 @@ const Title = styled.h1`
   text-transform: uppercase;
   letter-spacing: 0.5625rem;
   line-height: 1;
+
+  @media only screen and (min-width: 37.5em) {
+    letter-spacing: 0.9375rem;
+  }
 `;
 
 const IconButton = styled.button`

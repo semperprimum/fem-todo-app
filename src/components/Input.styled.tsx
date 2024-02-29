@@ -45,6 +45,14 @@ const InputContainer = styled.div`
   padding: 0.875rem 1.25rem;
   border-radius: 0.3125rem;
   box-shadow: 0px 35px 50px -15px ${(props) => (props.theme.name === "dark" ? "hsla(0, 0%, 0%, 0.5)" : "hsl(237, 20%, 80%, 0.5)")};
+
+  caret-color: ${(props) => props.theme.textColored};
+
+  @media only screen and (min-width: 37.5em) {
+    padding: 1.1rem 1.5rem;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
 `;
 
 const InputField = styled.input`
@@ -52,9 +60,11 @@ const InputField = styled.input`
   border: none;
   color: ${(props) => props.theme.text};
   outline: none;
+  font-size: var(--fs-sm);
 
   &::placeholder {
     color: ${(props) => props.theme.placeholder};
+    letter-spacing: -0.25px;
   }
 `;
 
@@ -63,4 +73,8 @@ const Circle = styled.div`
   border: 1px solid ${(props) => props.theme.divider};
   aspect-ratio: 1;
   border-radius: 100%;
+
+  @media only screen and (min-width: 37.5em) {
+    width: 1.5rem;
+  }
 `;

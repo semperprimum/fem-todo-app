@@ -75,6 +75,16 @@ const TodoItemContainer = styled.li<TodoItemContainerProps>`
         background-color: transparent;
       }
     `}
+
+  @media only screen and (min-width: 37.5em) {
+    padding-block: 1.195rem;
+
+    &:hover {
+      & > button {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const ItemInfo = styled.div`
@@ -91,6 +101,12 @@ const RemoveButton = styled.button`
 
   & > svg {
     display: block;
-    max-width: 0.75rem;
+    max-width: 1.125rem;
+  }
+
+  @media only screen and (min-width: 37.5em) {
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 150ms ease;
   }
 `;
